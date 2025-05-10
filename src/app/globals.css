@@ -1,0 +1,8 @@
+/* styles/globals.css */
+:root {
+  font-family: var(--font-geist-sans), sans-serif;
+  --font-geist-sans: "Geist", sans-serif;
+  --font-geist-mono: "Geist Mono", monospace;
+  --font-roboto-condensed: "Roboto Condensed", sans-serif;
+  background-color: #c0c0c0;
+}
