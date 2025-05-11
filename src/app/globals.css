@@ -6,3 +6,18 @@
   --font-roboto-condensed: "Roboto Condensed", sans-serif;
   background-color: #c0c0c0;
 }
+
+#login {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-field {
+  background-color: gray;
+
+  border-radius: 16px;
+  color: red;
+}

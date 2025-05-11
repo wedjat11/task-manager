@@ -1,6 +1,10 @@
 "use client";
-import TitleForm from "./login/ui/TitleForm";
 
-export default function Home() {
-  return <TitleForm>Task Manager</TitleForm>;
-}
+import React from "react";
+import MainContent from "./login/components/MainContent";
+
+const Page = () => {
+  return <MainContent />;
+};
+
+export default Page;
