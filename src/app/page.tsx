@@ -29,13 +29,13 @@ const LoginCard = styled.div`
 
 const Title = styled.h2`
   font-size: 2.5rem;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   font-weight: 700;
   color: #111;
 
   @media (max-width: 768px) {
     font-size: 1.5rem;
-    margin-bottom: 10px;
+    margin-bottom: 40px;
   }
 `;
 const Button = styled.button`
@@ -51,6 +51,12 @@ const Button = styled.button`
 
   &:hover {
     background-color: #45c14d;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+    padding: 10px;
+    margin-top: 10px;
   }
 `;
 
@@ -71,10 +77,36 @@ const Input = styled.input`
   }
 `;
 
+const Label = styled.label`
+  display: block;
+  margin-bottom: 60px;
+  padding-bottom: 10px;
+  font-size: 0.9rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+  }
+`;
+
+const Mya = styled.a`
+  color: #777;
+  margin-top: 20px;
+  text-decoration: underline;
+
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+    margin-top: 30px;
+  }
+`;
+
 const ErrorMessage = styled.div`
   color: #e74c3c;
   font-size: 0.9rem;
   margin-bottom: 10px;
+
+  @media (max-width: 768px) {
+    font-size: 0.7rem;
+  }
 `;
 
 const Login: FC = () => {
@@ -129,7 +161,7 @@ const Login: FC = () => {
           {formik.touched.password && formik.errors.password && (
             <ErrorMessage>{formik.errors.password}</ErrorMessage>
           )}
-          <label
+          <Label
             style={{
               marginBottom: "15px",
               display: "flex",
@@ -139,19 +171,10 @@ const Login: FC = () => {
           >
             <input type="checkbox" style={{ marginRight: "10px" }} /> Keep me
             signed in
-          </label>
+          </Label>
           <Button type="submit">Sign In</Button>
         </form>
-        <a
-          href="#"
-          style={{
-            marginTop: "20px",
-            color: "#777",
-            textDecoration: "underline",
-          }}
-        >
-          Forgot password?
-        </a>
+        <Mya href="#">Forgot password?</Mya>
       </LoginCard>
     </LoginContainer>
   );
