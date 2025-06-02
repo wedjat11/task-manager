@@ -73,3 +73,50 @@ task-manager
          └─ requests.js
 
 ```
+```
+task-manager
+├─ eslint.config.mjs
+├─ jsconfig.json
+├─ middleware.js
+├─ next.config.mjs
+├─ package-lock.json
+├─ package.json
+├─ postcss.config.mjs
+├─ public
+│  ├─ assets
+│  │  ├─ email.svg
+│  │  └─ logo.svg
+│  ├─ file.svg
+│  ├─ globe.svg
+│  ├─ next.svg
+│  ├─ vercel.svg
+│  └─ window.svg
+├─ README.md
+└─ src
+   └─ app
+      ├─ (auth)
+      │  └─ login
+      │     ├─ components
+      │     │  ├─ DisclaimerForm.jsx
+      │     │  ├─ HeaderForm.jsx
+      │     │  ├─ LayoutForm.jsx
+      │     │  ├─ LoginForm.jsx
+      │     │  ├─ LogoForm.jsx
+      │     │  └─ SignupForm.jsx
+      │     └─ page.jsx
+      ├─ api
+      │  ├─ login
+      │  │  └─ route.js
+      │  └─ logout
+      │     └─ route.js
+      ├─ dashboard
+      │  ├─ layout.jsx
+      │  └─ page.jsx
+      ├─ favicon.ico
+      ├─ globals.css
+      ├─ layout.js
+      ├─ page.js
+      └─ utils
+         └─ requests.js
+
+```

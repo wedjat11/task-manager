@@ -1,18 +1,20 @@
 import React from "react";
 import LogoForm from "./LogoForm";
-
 import HeaderForm from "./HeaderForm";
 import DisclaimerForm from "./DisclaimerForm";
 
 const LayoutForm = () => {
   return (
-    <div className="flex w-10/12 mx-auto bg-white h-[90%] rounded-md">
-      <section className="w-1/2 flex flex-col items-center justify-between h-9/12 my-auto px-12">
+    <div className="flex flex-col md:flex-row w-11/12 max-w-5xl mx-auto bg-white h-auto md:h-[90%] rounded-md shadow-md overflow-hidden">
+      {/* Form Section */}
+      <section className="w-full md:w-1/2 flex flex-col items-center justify-between py-8 px-6 sm:px-10 md:px-12">
         <LogoForm />
         <HeaderForm />
         <DisclaimerForm />
       </section>
-      <section className=" w-1/2">
+
+      {/* Image Section (hidden on mobile) */}
+      <section className="hidden md:block w-1/2">
         <img
           src="https://placehold.co/300x400"
           alt="logo"
@@ -22,4 +24,5 @@ const LayoutForm = () => {
     </div>
   );
 };
+
 export default LayoutForm;
