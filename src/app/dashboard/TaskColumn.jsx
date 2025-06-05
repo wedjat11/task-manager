@@ -89,20 +89,22 @@ export default function TaskColumn({ state, tasks, setTasks, allTasks }) {
     >
       <h2 className="text-lg font-semibold mb-3">{state}</h2>
 
-      <div className="flex flex-col gap-2 mb-4">
+      <div className="flex flex-col gap-2 mb-4 z-10">
         {Object.values(tasks).map((task) => (
           <DraggableTask key={task.id} task={task}>
             <div className="relative bg-gray-100 p-3 rounded-md shadow group">
               {/* Edit / Delete Icons */}
-              <div className="absolute top-1 right-1 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+              <div className="absolute top-1 right-1 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity z-50">
                 <button
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.stopPropagation();
                     setEditingTask(task);
                     setEditTitle(task.title);
                     setEditDescription(task.description);
-                    setConfirmId(null); // close delete if open
+                    setConfirmId(null);
                   }}
-                  className="text-blue-600 hover:text-blue-800 text-xs"
+                  data-no-drag="true"
+                  className="text-blue-600 hover:text-blue-800 text-xs cursor-pointer"
                   title="Edit"
                 >
                   ✏️
@@ -112,6 +114,7 @@ export default function TaskColumn({ state, tasks, setTasks, allTasks }) {
                     setConfirmId(task.id);
                     setEditingTask(null); // close edit if open
                   }}
+                  data-no-drag="true"
                   className="text-red-600 hover:text-red-800 text-xs"
                   title="Delete"
                 >

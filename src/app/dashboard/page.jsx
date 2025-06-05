@@ -1,7 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { DndContext, closestCenter, DragOverlay } from "@dnd-kit/core";
+import {
+  DndContext,
+  closestCenter,
+  DragOverlay,
+  PointerSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
 import TaskColumn from "./TaskColumn";
 
 const initialData = {
@@ -9,6 +17,79 @@ const initialData = {
   "In Progress": {},
   Done: {},
 };
+
+// 1. Función para detectar elementos interactivos
+function isInteractiveElement(element) {
+  const interactiveElements = [
+    "button",
+    "input",
+    "textarea",
+    "select",
+    "option",
+    "a",
+    "label",
+  ];
+
+  const tagName = element.tagName.toLowerCase();
+
+  // Verificar por tagName
+  if (interactiveElements.includes(tagName)) {
+    return true;
+  }
+
+  // Verificar por contentEditable
+  if (element.contentEditable === "true") {
+    return true;
+  }
+
+  // Verificar por atributo data-no-drag
+  if (element.closest("[data-no-drag]")) {
+    return true;
+  }
+
+  return false;
+}
+
+// 2. Sensor personalizado para mouse
+class CustomPointerSensor extends PointerSensor {
+  static activators = [
+    {
+      eventName: "onPointerDown",
+      handler: ({ nativeEvent: event }) => {
+        if (
+          !event.isPrimary ||
+          event.button !== 0 ||
+          isInteractiveElement(event.target)
+        ) {
+          return false;
+        }
+
+        return true;
+      },
+    },
+  ];
+}
+
+// 3. Sensor personalizado para touch
+class CustomTouchSensor extends TouchSensor {
+  static activators = [
+    {
+      eventName: "onTouchStart",
+      handler: ({ nativeEvent: event }) => {
+        const { touches } = event;
+        if (touches.length > 1) {
+          return false;
+        }
+
+        if (isInteractiveElement(event.target)) {
+          return false;
+        }
+
+        return true;
+      },
+    },
+  ];
+}
 
 export default function DashboardBoard() {
   const [tasks, setTasks] = useState(initialData);
@@ -22,6 +103,12 @@ export default function DashboardBoard() {
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
+
+  // 4. Configurar sensores personalizados
+  const sensors = useSensors(
+    useSensor(CustomPointerSensor),
+    useSensor(CustomTouchSensor)
+  );
 
   const handleDragStart = ({ active }) => {
     const activeId = active.id;
@@ -70,6 +157,7 @@ export default function DashboardBoard() {
 
   return (
     <DndContext
+      sensors={sensors} // 5. Usar los sensores personalizados
       collisionDetection={closestCenter}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
