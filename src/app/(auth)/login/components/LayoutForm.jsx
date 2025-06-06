@@ -16,7 +16,7 @@ const LayoutForm = () => {
       {/* Image Section (hidden on mobile) */}
       <section className="hidden md:block w-1/2">
         <img
-          src="https://placehold.co/300x400"
+          src="/assets/welcome.webp"
           alt="logo"
           className="h-full w-full object-cover"
         />
