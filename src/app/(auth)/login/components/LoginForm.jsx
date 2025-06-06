@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import Image from "next/image";
 import * as Yup from "yup";
 import { useLogin } from "@/app/utils/requests";
+import { ClipLoader } from "react-spinners"; // Cambiamos a react-spinners
 
 const emailRegex = /^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/;
 const SignupSchema = Yup.object().shape({
@@ -14,6 +15,7 @@ const SignupSchema = Yup.object().shape({
 
 const LoginForm = () => {
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -23,9 +25,13 @@ const LoginForm = () => {
     onSubmit: async (values) => {
       setError(null);
       try {
+        setLoading(true);
         const data = await useLogin(values.email);
+        setLoading(false);
+
         alert("Login exitoso: token " + data.token);
       } catch (err) {
+        setLoading(false); // Asegurarse de quitar el estado de carga en caso de error
         setError(err.message);
       }
     },
@@ -66,9 +72,21 @@ const LoginForm = () => {
 
         <button
           type="submit"
-          className="cursor-pointer w-full bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-800 transition-all duration-200"
+          disabled={loading}
+          className={`cursor-pointer w-full bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-800 transition-all duration-200 flex items-center justify-center ${
+            loading ? "opacity-75 cursor-not-allowed" : ""
+          }`}
         >
-          Submit
+          {loading ? (
+            <ClipLoader
+              color="#ffffff"
+              size={24}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          ) : (
+            "Submit"
+          )}
         </button>
       </div>
     </form>
