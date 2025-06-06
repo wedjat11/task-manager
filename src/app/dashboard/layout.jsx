@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import LogoutButton from "../(auth)/login/components/LogoutButton";
 
 export default function DashboardLayout({ children }) {
   const [userName, setUserName] = useState(null);
@@ -34,15 +33,12 @@ export default function DashboardLayout({ children }) {
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Topbar */}
         <header className="h-16 bg-white border-b flex items-center justify-between px-4 sm:px-6 shadow-sm">
-          <h1 className="text-lg sm:text-xl font-semibold hidden md:block">
-            Dashboard
-          </h1>
+          <h1 className="text-lg sm:text-xl font-semibold">Dashboard</h1>
           {userName !== null && (
             <p className="text-gray-600 text-sm sm:text-base">
-              👋 Hello, <strong>{userName}</strong>
+              👋 Hola, <strong>{userName}</strong>
             </p>
           )}
-          <LogoutButton />
         </header>
 
         <main className="flex-1 overflow-y-auto p-4 sm:p-6 bg-gray-100">

@@ -1,7 +1,10 @@
+// src/app/utils/requests.js
 export async function useLogin(email) {
   try {
-    const clientKey = Math.random().toString(36).slice(2);
+    // 1. Generar clave dinámica (puede usarse también como challenge simulada)
+    const clientKey = Math.random().toString(36).slice(2); // clave pseudoaleatoria
 
+    // 2. Enviar email y clave al backend
     const response = await fetch("/api/login", {
       method: "POST",
       headers: {
@@ -16,33 +19,17 @@ export async function useLogin(email) {
       throw new Error(errorData.error || "Login failed");
     }
 
+    // 3. Obtener el token encriptado (simulado desde el backend)
     const { encrypted } = await response.json();
 
     // 4. Guardar el token encriptado en localStorage
     localStorage.setItem("auth-token", encrypted);
 
+    // 5. Redirigir
     window.location.href = "/dashboard";
   } catch (error) {
     console.error("Login error:", error.message);
     throw error;
-  }
-}
-
-export async function useLogout() {
-  try {
-    const response = await fetch("/api/logout", {
-      method: "GET",
-      credentials: "include",
-    });
-
-    if (response.redirected) {
-      window.location.href = response.url;
-    } else {
-      window.location.href = "/login";
-    }
-  } catch (error) {
-    console.error("Logout failed:", error);
-    window.location.href = "/login";
   }
 }
 
