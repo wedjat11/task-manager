@@ -90,96 +90,103 @@ export default function TaskColumn({ state, tasks, setTasks, allTasks }) {
       <h2 className="text-lg font-semibold mb-3">{state}</h2>
 
       <div className="flex flex-col gap-2 mb-4 z-10">
-        {Object.values(tasks).map((task) => (
-          <DraggableTask key={task.id} task={task}>
-            <div className="relative bg-gray-100 p-3 rounded-md shadow group">
-              {/* Edit / Delete Icons */}
-              <div className="absolute top-1 right-1 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity z-50">
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setEditingTask(task);
-                    setEditTitle(task.title);
-                    setEditDescription(task.description);
-                    setConfirmId(null);
-                  }}
-                  data-no-drag="true"
-                  className="text-blue-600 hover:text-blue-800 text-xs cursor-pointer"
-                  title="Edit"
-                >
-                  ✏️
-                </button>
-                <button
-                  onClick={() => {
-                    setConfirmId(task.id);
-                    setEditingTask(null); // close edit if open
-                  }}
-                  data-no-drag="true"
-                  className="text-red-600 hover:text-red-800 text-xs"
-                  title="Delete"
-                >
-                  🗑
-                </button>
-              </div>
-
-              {/* Delete confirmation */}
-              {confirmId === task.id && (
-                <div className="absolute top-8 right-2 bg-white border border-gray-300 shadow p-2 rounded z-50">
-                  <p className="text-xs mb-2">Delete this task?</p>
-                  <div className="flex gap-1">
+        {Object.values(tasks).map((task, index) => {
+          const taskKey = task?.id || `fallback-${index}`;
+          return (
+            <div key={taskKey}>
+              <DraggableTask task={task}>
+                <div className="relative bg-gray-100 p-3 rounded-md shadow group">
+                  {/* Edit / Delete Icons */}
+                  <div className="absolute top-1 right-1 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity z-50">
                     <button
-                      onClick={() => handleDelete(task.id)}
-                      className="bg-red-500 text-white text-xs px-2 py-1 rounded"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setEditingTask(task);
+                        setEditTitle(task.title);
+                        setEditDescription(task.description);
+                        setConfirmId(null);
+                      }}
+                      data-no-drag="true"
+                      className="text-blue-600 hover:text-blue-800 text-xs cursor-pointer"
+                      title="Edit"
                     >
-                      Yes
+                      ✏️
                     </button>
                     <button
-                      onClick={() => setConfirmId(null)}
-                      className="border text-xs px-2 py-1 rounded"
+                      onClick={() => {
+                        setConfirmId(task.id);
+                        setEditingTask(null); // close edit if open
+                      }}
+                      data-no-drag="true"
+                      className="text-red-600 hover:text-red-800 text-xs"
+                      title="Delete"
                     >
-                      No
+                      🗑
                     </button>
                   </div>
-                </div>
-              )}
 
-              {/* Editing Mode */}
-              {editingTask?.id === task.id ? (
-                <div className="mt-2 space-y-1">
-                  <input
-                    value={editTitle}
-                    onChange={(e) => setEditTitle(e.target.value)}
-                    className="w-full p-1 text-sm border rounded"
-                  />
-                  <textarea
-                    value={editDescription}
-                    onChange={(e) => setEditDescription(e.target.value)}
-                    className="w-full p-1 text-sm border rounded"
-                  />
-                  <div className="flex gap-2 mt-1">
-                    <button
-                      onClick={() => handleEditSubmit(task.id)}
-                      className="text-white bg-green-600 px-2 py-1 text-sm rounded"
-                    >
-                      Save
-                    </button>
-                    <button
-                      onClick={() => setEditingTask(null)}
-                      className="text-gray-600 border px-2 py-1 text-sm rounded"
-                    >
-                      Cancel
-                    </button>
-                  </div>
+                  {/* Delete confirmation */}
+                  {confirmId === task.id && (
+                    <div className="absolute top-8 right-2 bg-white border border-gray-300 shadow p-2 rounded z-50">
+                      <p className="text-xs mb-2">Delete this task?</p>
+                      <div className="flex gap-1">
+                        <button
+                          onClick={() => handleDelete(task.id)}
+                          className="bg-red-500 text-white text-xs px-2 py-1 rounded"
+                        >
+                          Yes
+                        </button>
+                        <button
+                          onClick={() => setConfirmId(null)}
+                          className="border text-xs px-2 py-1 rounded"
+                        >
+                          No
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Editing Mode */}
+                  {editingTask?.id === task.id ? (
+                    <div className="mt-2 space-y-1">
+                      <input
+                        value={editTitle}
+                        onChange={(e) => setEditTitle(e.target.value)}
+                        className="w-full p-1 text-sm border rounded"
+                      />
+                      <textarea
+                        value={editDescription}
+                        onChange={(e) => setEditDescription(e.target.value)}
+                        className="w-full p-1 text-sm border rounded"
+                      />
+                      <div className="flex gap-2 mt-1">
+                        <button
+                          onClick={() => handleEditSubmit(task.id)}
+                          className="text-white bg-green-600 px-2 py-1 text-sm rounded"
+                        >
+                          Save
+                        </button>
+                        <button
+                          onClick={() => setEditingTask(null)}
+                          className="text-gray-600 border px-2 py-1 text-sm rounded"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <p className="text-sm font-medium">{task.title}</p>
+                      <p className="text-xs text-gray-600">
+                        {task.description}
+                      </p>
+                    </>
+                  )}
                 </div>
-              ) : (
-                <>
-                  <p className="text-sm font-medium">{task.title}</p>
-                  <p className="text-xs text-gray-600">{task.description}</p>
-                </>
-              )}
+              </DraggableTask>
             </div>
-          </DraggableTask>
-        ))}
+          );
+        })}
       </div>
 
       {/* Add Task Form */}
