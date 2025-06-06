@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import UserMenu from "./components/LogoutButton";
 
 export default function DashboardLayout({ children }) {
   const [userName, setUserName] = useState(null);
@@ -39,6 +40,7 @@ export default function DashboardLayout({ children }) {
               👋 Hola, <strong>{userName}</strong>
             </p>
           )}
+          <UserMenu />
         </header>
 
         <main className="flex-1 overflow-y-auto p-4 sm:p-6 bg-gray-100">

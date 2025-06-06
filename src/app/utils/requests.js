@@ -33,6 +33,24 @@ export async function useLogin(email) {
   }
 }
 
+export async function useLogout() {
+  try {
+    const response = await fetch("/api/logout", {
+      method: "GET",
+      credentials: "include", // Necesario para cookies HTTP-only
+    });
+
+    if (response.redirected) {
+      window.location.href = response.url;
+    } else {
+      window.location.href = "/login";
+    }
+  } catch (error) {
+    console.error("Logout failed:", error);
+    window.location.href = "/login";
+  }
+}
+
 export async function createUser(email) {
   try {
     const response = await fetch("https://reqres.in/api/users", {
