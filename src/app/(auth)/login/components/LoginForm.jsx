@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import Image from "next/image";
 import * as Yup from "yup";
 import { useLogin } from "@/app/utils/requests";
-import { ClipLoader } from "react-spinners"; // Cambiamos a react-spinners
+import { ClipLoader } from "react-spinners";
 
 const emailRegex = /^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/;
 const SignupSchema = Yup.object().shape({
@@ -31,7 +31,7 @@ const LoginForm = () => {
 
         alert("Login exitoso: token " + data.token);
       } catch (err) {
-        setLoading(false); // Asegurarse de quitar el estado de carga en caso de error
+        setLoading(false);
         setError(err.message);
       }
     },

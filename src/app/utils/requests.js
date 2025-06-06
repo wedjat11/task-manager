@@ -18,8 +18,38 @@ export async function useLogin(email) {
 
     const { encrypted } = await response.json();
 
-    // 4. Guardar el token encriptado en localStorage
+    // Guardar el token y el email del usuario
     localStorage.setItem("auth-token", encrypted);
+    localStorage.setItem("user-email", email);
+
+    // Inicializar estructura de árbol para tasks si no existe
+    const allTasks = JSON.parse(localStorage.getItem("tasks") || "{}");
+    if (!allTasks[email]) {
+      allTasks[email] = {
+        // Nodo raíz del árbol
+        root: {
+          id: "root",
+          type: "root",
+          children: [], // Aquí irán los IDs de las tareas principales
+          depth: 0,
+        },
+        // Diccionario de nodos (tareas)
+        nodes: {
+          /*
+          Ejemplo de estructura:
+          "task1": {
+            id: "task1",
+            title: "Tarea principal",
+            completed: false,
+            children: ["subtask1", "subtask2"],
+            parent: "root",
+            depth: 1
+          }
+          */
+        },
+      };
+      localStorage.setItem("tasks", JSON.stringify(allTasks));
+    }
 
     window.location.href = "/dashboard";
   } catch (error) {
